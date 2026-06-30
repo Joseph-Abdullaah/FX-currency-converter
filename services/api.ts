@@ -56,5 +56,5 @@ export async function getHistoricalRates({
     symbols: symbol,
   })
 
-  return fetcher<HistoricalRatesResponse>(`${startDate}..${endDate}?${params}`)
+  return fetcher<HistoricalRatesResponse>(`/${startDate}..${endDate}?${params}`)
 }
