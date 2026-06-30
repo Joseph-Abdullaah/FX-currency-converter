@@ -27,7 +27,7 @@ export async function convertCurrency({
   const params = new URLSearchParams({
     amount: amount.toString(),
     base,
-    symbol: symbol,
+    symbols: symbol,
   })
 
   return fetcher<LatestRatesResponse>(`${endpoints.latest}?${params}`)
