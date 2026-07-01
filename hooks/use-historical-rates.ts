@@ -6,10 +6,10 @@ import type { GetHistoricalRatesParams } from "@/types/types"
 export function useHistoricalRates(params: GetHistoricalRatesParams) {
   return useQuery({
     queryKey: queryKeys.historicalRates(
-      params.startDate,
-      params.endDate,
       params.base,
-      params.symbol
+      params.symbol,
+      params.startDate,
+      params.endDate
     ),
     queryFn: () => getHistoricalRates(params),
     enabled: Boolean(
