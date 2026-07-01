@@ -30,7 +30,7 @@ export interface ConvertCurrencyParams {
 
 export interface GetLatestRatesParams {
   base: string,
-  symbol?: string[]
+  symbols?: string[]
 }
 
 export interface GetHistoricalRatesParams {
