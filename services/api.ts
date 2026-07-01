@@ -33,13 +33,13 @@ export async function convertCurrency({
   return fetcher<LatestRatesResponse>(`${endpoints.latest}?${params}`)
 }
 
-export async function getLatestRates({ base, symbol }: GetLatestRatesParams) {
+export async function getLatestRates({ base, symbols }: GetLatestRatesParams) {
   const params = new URLSearchParams({
     base,
   })
 
-  if (symbol?.length) {
-    params.set("symbol", symbol.join(","))
+  if (symbols?.length) {
+    params.set("symbols", symbols.join(","))
   }
 
   return fetcher<LatestRatesResponse>(`${endpoints.latest}?${params}`)
