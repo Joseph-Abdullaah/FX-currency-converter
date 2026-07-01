@@ -12,4 +12,5 @@ export function useConvertCurrency(params: ConvertCurrencyParams) {
     ),
     queryFn: () => convertCurrency(params),
     enabled: Boolean(params.base && params.symbol) && Number.isFinite(params.amount),
+  })
 }
