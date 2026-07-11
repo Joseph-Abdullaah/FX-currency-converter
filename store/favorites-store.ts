@@ -17,7 +17,7 @@ interface FavoritesActions {
   isFavorite: (pair: FavoritePair) => boolean
 }
 
-const initialSate: FavoritesState = {
+const initialState: FavoritesState = {
   favorites: [],
 }
 
@@ -26,7 +26,7 @@ export interface FavoritesStore extends FavoritesState, FavoritesActions {}
 export const useFavoritesStore = create<FavoritesStore>()(
   persist(
     (set, get) => ({
-      ...initialSate,
+      ...initialState,
       addFavorite: (pair) =>
         set((state) => ({
           favorites: [...state.favorites, pair],
