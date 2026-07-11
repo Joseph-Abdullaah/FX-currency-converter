@@ -20,11 +20,11 @@ interface ConversionLogActions {
   clearLogs: () => void
 }
 
-type ConversionLogStore = ConversionLogState & ConversionLogActions;
+type ConversionLogStore = ConversionLogState & ConversionLogActions
 
 const initialState: ConversionLogState = {
   logs: [],
-};
+}
 
 export const useConversionLogStore = create<ConversionLogStore>()(
   persist(
