@@ -11,11 +11,11 @@ interface HistoryChartActions {
   setRange: (range: ChartRange) => void
 }
 
-type HistoryChartStore = HistoryChartState & HistoryChartActions;
+type HistoryChartStore = HistoryChartState & HistoryChartActions
 
 const initialState: HistoryChartState = {
   range: "1M",
-};
+}
 
 export const useHistoryChartStore = create<HistoryChartStore>()(
   persist(
@@ -28,4 +28,4 @@ export const useHistoryChartStore = create<HistoryChartStore>()(
       name: "history-chart-store",
     }
   )
-);
+)
