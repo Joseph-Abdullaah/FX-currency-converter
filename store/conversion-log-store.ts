@@ -50,4 +50,4 @@ export const useConversionLogStore = create<ConversionLogStore>()(
       name: "conversion-log-store",
     }
   )
-);
+)
