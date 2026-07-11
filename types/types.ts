@@ -37,5 +37,6 @@ export interface GetHistoricalRatesParams {
   startDate: string,
   endDate: string,
   base: string,
-  symbol: string
+  /** Omit to fetch every symbol quoted against `base` in one request. */
+  symbol?: string
 }
