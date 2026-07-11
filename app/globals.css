@@ -38,8 +38,8 @@
   --sidebar-accent-foreground: oklch(0.1391 0.0873 268.8267);
   --sidebar-border: oklch(0.9288 0.0126 255.5078);
   --sidebar-ring: oklch(0.9157 0.2054 121.6363);
-  --font-sans: Inter, sans-serif;
-  --font-serif: Georgia, serif;
+  --font-sans: JetBrains Mono, ui-monospace, monospace;
+  --font-serif: JetBrains Mono, ui-monospace, monospace;
   --font-mono: JetBrains Mono, monospace;
   --radius: 0.625rem;
   --shadow-x: 0px;
@@ -93,8 +93,8 @@
   --sidebar-accent-foreground: oklch(0.9851 0 0);
   --sidebar-border: oklch(0.3012 0 0);
   --sidebar-ring: oklch(0.9157 0.2054 121.6363);
-  --font-sans: Inter, sans-serif;
-  --font-serif: Georgia, serif;
+  --font-sans: JetBrains Mono, ui-monospace, monospace;
+  --font-serif: JetBrains Mono, ui-monospace, monospace;
   --font-mono: JetBrains Mono, monospace;
   --radius: 0.625rem;
   --shadow-x: 0px;
@@ -180,8 +180,5 @@
   body {
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
-  }
-  html {
-    @apply font-mono;
   }
 }
