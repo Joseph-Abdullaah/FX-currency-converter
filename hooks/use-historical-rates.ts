@@ -12,8 +12,7 @@ export function useHistoricalRates(params: GetHistoricalRatesParams) {
       params.endDate
     ),
     queryFn: () => getHistoricalRates(params),
-    enabled: Boolean(
-      params.base && params.symbol && params.startDate && params.endDate
-    ),
+    // `symbol` is optional — omitting it fetches every symbol against `base`.
+    enabled: Boolean(params.base && params.startDate && params.endDate),
   })
 }
