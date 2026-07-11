@@ -53,8 +53,12 @@ export async function getHistoricalRates({
 }: GetHistoricalRatesParams) {
   const params = new URLSearchParams({
     base,
-    symbols: symbol,
   })
+
+  // Without `symbols`, the API returns every currency quoted against `base`.
+  if (symbol) {
+    params.set("symbols", symbol)
+  }
 
   return fetcher<HistoricalRatesResponse>(`/${startDate}..${endDate}?${params}`)
 }
