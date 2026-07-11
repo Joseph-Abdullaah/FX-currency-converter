@@ -1,14 +1,14 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from "zustand"
+import { persist } from "zustand/middleware"
 
-export type ChartRange = "1D" | "1W" | "1M" | "3M" | "1Y" | "5Y";
+export type ChartRange = "1D" | "1W" | "1M" | "3M" | "1Y" | "5Y"
 
 interface HistoryChartState {
-  range: ChartRange;
+  range: ChartRange
 }
 
 interface HistoryChartActions {
-  setRange: (range: ChartRange) => void;
+  setRange: (range: ChartRange) => void
 }
 
 type HistoryChartStore = HistoryChartState & HistoryChartActions;
