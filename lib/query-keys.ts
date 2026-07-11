@@ -9,7 +9,7 @@ export const queryKeys = {
 
   historicalRates: (
     base: string,
-    symbol: string,
+    symbol: string | undefined,
     startDate: string,
     endDate: string
   ) => ["historical-rates", base, symbol, startDate, endDate] as const,
