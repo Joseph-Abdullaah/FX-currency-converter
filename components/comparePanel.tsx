@@ -1,12 +1,12 @@
 "use client"
 
-import Image from "next/image"
-
+import { CurrencyFlag } from "@/components/currencyFlag"
 import FavoriteButton from "@/components/favoriteButton"
 import CompareListSkeleton from "@/components/compareListSkeleton"
 import { useConverterStore } from "@/store/convert-store"
 import { useCurrencies } from "@/hooks/use-currencies"
 import { useLatestRates } from "@/hooks/use-latest-rates"
+import { amountFormatter, formatRate, moneyFormatter } from "@/lib/format"
 
 /**
  * Curated set of major currencies the input is compared against. Only the list
@@ -14,26 +14,6 @@ import { useLatestRates } from "@/hooks/use-latest-rates"
  * All are valid ECB/Frankfurter codes (e.g. the design's "BDT" is unsupported).
  */
 const COMPARE_CODES = ["EUR", "GBP", "JPY", "CHF", "CAD", "AUD", "CNY", "INR"]
-
-/** ISO 4217 currency codes start with the ISO 3166 country code (GBP → gb). */
-function countryOf(code: string) {
-  return code.slice(0, 2).toLowerCase()
-}
-
-/** Match the design's variable precision: fewer decimals for larger rates. */
-function formatRate(rate: number) {
-  const decimals = rate >= 100 ? 2 : rate >= 10 ? 3 : 4
-  return rate.toFixed(decimals)
-}
-
-const amountFormatter = new Intl.NumberFormat("en-US", {
-  maximumFractionDigits: 2,
-})
-
-const convertedFormatter = new Intl.NumberFormat("en-US", {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-})
 
 export default function ComparePanel() {
   const amount = useConverterStore((state) => state.amount)
@@ -91,13 +71,7 @@ export default function ComparePanel() {
               className="flex items-center gap-4 rounded-[10px] border border-border bg-secondary px-4 py-3"
             >
               <div className="flex min-w-0 flex-1 items-center gap-3">
-                <Image
-                  src={`/assets/images/flags/${countryOf(row.code)}.webp`}
-                  alt=""
-                  width={28}
-                  height={28}
-                  className="size-7 shrink-0 rounded-full object-cover"
-                />
+                <CurrencyFlag code={row.code} size={28} className="size-7" />
                 <div className="min-w-0">
                   <p className="text-preset-3-bold text-foreground">
                     {row.code}
@@ -111,7 +85,7 @@ export default function ComparePanel() {
               <div className="text-right">
                 <p className="text-preset-2-bold text-foreground">
                   {row.converted != null
-                    ? convertedFormatter.format(row.converted)
+                    ? moneyFormatter.format(row.converted)
                     : "—"}
                 </p>
                 <p className="text-preset-5 text-foreground/70">

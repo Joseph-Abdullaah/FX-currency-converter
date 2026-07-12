@@ -3,19 +3,10 @@
 import { ArrowRight, Trash2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { amountFormatter, formatRate } from "@/lib/format"
 import { Button } from "@/components/ui/button"
 import ExportLog from "@/components/exportLog"
 import { useConversionLogStore } from "@/store/conversion-log-store"
-
-const amountFormatter = new Intl.NumberFormat("en-US", {
-  maximumFractionDigits: 2,
-})
-
-/** Match the design's variable precision: fewer decimals for larger rates. */
-function formatRate(rate: number) {
-  const decimals = rate >= 100 ? 2 : rate >= 10 ? 3 : 4
-  return rate.toFixed(decimals)
-}
 
 /** ISO timestamp -> "MAY 14 · 16:00". */
 function formatTimestamp(iso: string) {

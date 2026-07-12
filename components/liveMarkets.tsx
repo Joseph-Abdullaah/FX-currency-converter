@@ -6,16 +6,10 @@ import LiveRates from "@/components/liveRates"
 import LiveMarketSkeleton from "@/components/liveMarketSkeleton"
 import { useLatestRates } from "@/hooks/use-latest-rates"
 import { useHistoricalRates } from "@/hooks/use-historical-rates"
+import { isoDate } from "@/lib/date"
 
 /** Every ticker pair is quoted against USD. */
 const TICKER_BASE = "USD"
-
-/** YYYY-MM-DD for `offset` days before today (0 = today). */
-function isoDate(offsetDays: number) {
-  const date = new Date()
-  date.setDate(date.getDate() - offsetDays)
-  return date.toISOString().slice(0, 10)
-}
 
 export default function LiveMarkets() {
   // Current rate for every symbol against USD, in one polled request — this

@@ -6,10 +6,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import CurrencySelect from "@/components/currencySelect"
 import { useConverterStore } from "@/store/convert-store"
-
-const formatter = new Intl.NumberFormat("en-US", {
-  maximumFractionDigits: 2,
-})
+import { amountFormatter } from "@/lib/format"
 
 export default function SendCard() {
   const amount = useConverterStore((state) => state.amount)
@@ -22,7 +19,7 @@ export default function SendCard() {
 
   // While editing, show the user's raw keystrokes; otherwise mirror the store
   // (formatted), so external changes like hydration or swap flow straight in.
-  const value = focused ? draft : formatter.format(amount)
+  const value = focused ? draft : amountFormatter.format(amount)
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     // Accept digits and a single decimal point only — drop anything else

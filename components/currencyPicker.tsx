@@ -1,10 +1,11 @@
 "use client"
 
 import * as React from "react"
-import Image from "next/image"
 import { ChevronDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { CurrencyFlag } from "@/components/currencyFlag"
+import type { Currency } from "@/types/types"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -19,38 +20,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-// import type { CurrencyResponse } from "@/types/types"
 
-interface Currency {
-  code: string
-  name: string
-  flag?: string
+interface PickerCurrency extends Currency {
   popular?: boolean
 }
 
 interface CurrencyPickerProps {
   value: string
-  currencies: Currency[]
-  onValueChange: (value: Currency | null) => void
+  currencies: PickerCurrency[]
+  onValueChange: (value: PickerCurrency | null) => void
   /** DOM id for the trigger, so keyboard shortcuts can target it. */
   triggerId?: string
-}
-
-/** ISO 4217 currency codes start with the ISO 3166 country code (USD → us). */
-function countryOf(code: string) {
-  return code.slice(0, 2).toLowerCase()
-}
-
-function Flag({ code }: { code: string }) {
-  return (
-    <Image
-      src={`/assets/images/flags/${countryOf(code)}.webp`}
-      alt=""
-      width={24}
-      height={24}
-      className="size-6 shrink-0 rounded-full object-cover"
-    />
-  )
 }
 
 function GroupHeading({ label, count }: { label: string; count: number }) {
@@ -74,12 +54,12 @@ export function CurrencyPicker({
   const popular = currencies.filter((currency) => currency.popular)
   const others = currencies.filter((currency) => !currency.popular)
 
-  function handleSelect(currency: Currency) {
+  function handleSelect(currency: PickerCurrency) {
     onValueChange(currency.code === value ? null : currency)
     setOpen(false)
   }
 
-  function renderItem(currency: Currency) {
+  function renderItem(currency: PickerCurrency) {
     return (
       <CommandItem
         key={currency.code}
@@ -88,7 +68,7 @@ export function CurrencyPicker({
         onSelect={() => handleSelect(currency)}
         className="gap-3 px-2 py-2"
       >
-        <Flag code={currency.code} />
+        <CurrencyFlag code={currency.code} className="size-6" />
         <span className="text-preset-3-bold text-foreground">
           {currency.code}
         </span>
@@ -112,7 +92,7 @@ export function CurrencyPicker({
         >
           {selected ? (
             <>
-              <Flag code={selected.code} />
+              <CurrencyFlag code={selected.code} className="size-6" />
               <span className="text-foreground">{selected.code}</span>
             </>
           ) : (

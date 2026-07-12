@@ -3,11 +3,7 @@
 import CurrencySelect from "@/components/currencySelect"
 import ConverterSkeleton from "@/components/converterSkeleton"
 import { useConverterStore } from "@/store/convert-store"
-
-const formatter = new Intl.NumberFormat("en-US", {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-})
+import { moneyFormatter } from "@/lib/format"
 
 interface ReceiveCardProps {
   converted?: number
@@ -27,7 +23,11 @@ export default function ReceiveCard({
   // we replace with a skeleton — the rest of the card stays in place.
   const showSkeleton = converted == null && isLoading
   const display =
-    converted != null ? formatter.format(converted) : isError ? "—" : "0.00"
+    converted != null
+      ? moneyFormatter.format(converted)
+      : isError
+        ? "—"
+        : "0.00"
 
   return (
     <div className="flex flex-1 flex-col justify-end gap-5 rounded-2xl border border-border bg-secondary p-5">

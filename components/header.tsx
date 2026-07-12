@@ -19,14 +19,14 @@ export default function Header({ dataProvider, dataType }: HeaderProps) {
       <Logo />
       <div className="flex items-center gap-4">
         <div className="flex gap-2 text-[10px] text-muted-foreground md:text-base">
-          <p className="flex items-center gap-1">
+          <div className="flex items-center gap-1">
             {isLoading ? (
               <Skeleton className="h-2.5 w-5" />
             ) : (
               (currencyCount ?? "—")
             )}
             CURRENCIES
-          </p>
+          </div>
           ·<p>{dataProvider}</p>·<p>{dataType}</p>
         </div>
         <ThemeToggle />

@@ -12,6 +12,7 @@ import {
   type ChartRange,
 } from "@/store/history-chart-store"
 import { useHistoricalRates } from "@/hooks/use-historical-rates"
+import { isoDate } from "@/lib/date"
 
 export interface RatePoint {
   date: string
@@ -30,13 +31,6 @@ const RANGE_DAYS: Record<ChartRange, number> = {
   "3M": 90,
   "1Y": 365,
   "5Y": 365 * 5,
-}
-
-/** YYYY-MM-DD for `offset` days before today (0 = today). */
-function isoDate(offsetDays: number) {
-  const date = new Date()
-  date.setDate(date.getDate() - offsetDays)
-  return date.toISOString().slice(0, 10)
 }
 
 export default function HistoryPanel() {

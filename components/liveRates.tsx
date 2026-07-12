@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+import { formatRate } from "@/lib/format"
 
 interface LiveRatesProps {
   base: string
@@ -7,12 +8,6 @@ interface LiveRatesProps {
   rate?: number
   /** Day-over-day change in percent; `undefined` until a prior close is known. */
   changePct?: number
-}
-
-/** Match the design's variable precision: fewer decimals for larger rates. */
-function formatRate(rate: number) {
-  const decimals = rate >= 100 ? 2 : rate >= 10 ? 3 : 4
-  return rate.toFixed(decimals)
 }
 
 export default function LiveRates({
