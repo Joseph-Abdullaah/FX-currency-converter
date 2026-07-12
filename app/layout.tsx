@@ -4,6 +4,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/providers/theme-provider"
 import { cn } from "@/lib/utils"
 import { QueryProvider } from "@/providers/query-provider"
+import KeyboardShortcuts from "@/components/keyboardShortcuts"
 const fontSans = Geist({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -32,7 +33,10 @@ export default function RootLayout({
     >
       <body>
         <QueryProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            {children}
+            <KeyboardShortcuts />
+          </ThemeProvider>
         </QueryProvider>
       </body>
     </html>
