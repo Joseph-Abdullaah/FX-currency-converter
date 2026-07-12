@@ -1,7 +1,10 @@
 "use client"
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { useHistoryChartStore, type ChartRange } from "@/store/history-chart-store"
+import {
+  useHistoryChartStore,
+  type ChartRange,
+} from "@/store/history-chart-store"
 
 const timeframes: ChartRange[] = ["1D", "1W", "1M", "3M", "1Y", "5Y"]
 
@@ -15,7 +18,7 @@ export default function TimeframeToggle() {
       value={range}
       onValueChange={(value) => value && setRange(value as ChartRange)}
       spacing={0}
-      className="h-auto flex min-w-71.5 self-start rounded-lg bg-card p-0.5"
+      className="flex h-auto min-w-71.5 self-start rounded-lg bg-card p-0.5"
     >
       {timeframes.map((timeframe) => (
         <ToggleGroupItem

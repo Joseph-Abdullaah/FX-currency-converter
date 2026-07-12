@@ -3,10 +3,14 @@
 import * as React from "react"
 
 import ConversionStats from "@/components/conversionStats"
+import ConversionStatsSkeleton from "@/components/conversionStatsSkeleton"
 import TimeframeToggle from "@/components/timeframeToggle"
 import RateChart from "@/components/rateChart"
 import { useConverterStore } from "@/store/convert-store"
-import { useHistoryChartStore, type ChartRange } from "@/store/history-chart-store"
+import {
+  useHistoryChartStore,
+  type ChartRange,
+} from "@/store/history-chart-store"
 import { useHistoricalRates } from "@/hooks/use-historical-rates"
 
 export interface RatePoint {
@@ -65,7 +69,11 @@ export default function HistoryPanel() {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-2.5 lg:flex-row lg:items-start lg:justify-between">
-        <ConversionStats series={series} />
+        {isLoading ? (
+          <ConversionStatsSkeleton />
+        ) : (
+          <ConversionStats series={series} />
+        )}
         <TimeframeToggle />
       </div>
       <RateChart

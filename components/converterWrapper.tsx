@@ -5,6 +5,7 @@ import SwapButton from "@/components/swapButton"
 import ReceiveCard from "@/components/receiveCard"
 import FavoriteButton from "@/components/favoriteButton"
 import LogConversion from "@/components/logConversion"
+import { Skeleton } from "@/components/ui/skeleton"
 import { useConverterStore } from "@/store/convert-store"
 import { useConvertCurrency } from "@/hooks/use-convert-currency"
 
@@ -19,8 +20,7 @@ export default function ConverterWrapper() {
     symbol,
   })
 
-  const converted =
-    base === symbol ? amount : data?.rates?.[symbol]
+  const converted = base === symbol ? amount : data?.rates?.[symbol]
 
   const rate =
     base === symbol
@@ -33,7 +33,7 @@ export default function ConverterWrapper() {
     <section className="flex flex-col gap-4">
       <h2 className="text-preset-2 text-foreground">CHECK THE RATE</h2>
 
-      <div className="overflow-hidden rounded-[20px] bg-card ring-1 ring-border shadow-[0px_12px_40px_0px_rgba(0,0,0,0.4)]">
+      <div className="overflow-hidden rounded-[20px] bg-card ring-1 ring-border">
         <div className="flex flex-col items-stretch gap-6 p-5 md:flex-row md:items-center">
           <SendCard />
           <div className="flex justify-center">
@@ -47,11 +47,21 @@ export default function ConverterWrapper() {
         </div>
 
         <div className="flex flex-col items-start gap-4 border-t border-dashed border-border px-5 pt-4 pb-4 md:flex-row md:items-center md:justify-between">
-          <p className="text-preset-5 text-foreground">
-            {rate != null
-              ? `1 ${base} = ${rate.toFixed(4)} ${symbol}`
-              : `1 ${base} = — ${symbol}`}
-          </p>
+          {rate != null ? (
+            <p className="text-preset-5 text-foreground">
+              1 {base} = {rate.toFixed(4)} {symbol}
+            </p>
+          ) : isLoading ? (
+            <div className="flex items-center gap-1.5 text-preset-5 text-foreground">
+              <span>1 {base} =</span>
+              <Skeleton className="h-3 w-14" />
+              <span>{symbol}</span>
+            </div>
+          ) : (
+            <p className="text-preset-5 text-foreground">
+              1 {base} = — {symbol}
+            </p>
+          )}
           <div className="flex items-center gap-3">
             <FavoriteButton />
             <LogConversion />

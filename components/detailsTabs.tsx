@@ -2,12 +2,7 @@
 
 import * as React from "react"
 
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   Select,
   SelectContent,
@@ -53,7 +48,11 @@ export default function DetailsTabs() {
         </SelectTrigger>
         <SelectContent>
           {tabs.map((tab) => (
-            <SelectItem key={tab.value} value={tab.value} className="text-preset-3">
+            <SelectItem
+              key={tab.value}
+              value={tab.value}
+              className="text-preset-3"
+            >
               <span className="flex items-center gap-2">
                 {tab.label}
                 {tab.badge !== undefined && (
@@ -71,7 +70,11 @@ export default function DetailsTabs() {
         className="hidden w-full justify-start gap-2 rounded-none border-b border-border bg-transparent p-0 md:flex"
       >
         {tabs.map((tab) => (
-          <TabsTrigger key={tab.value} value={tab.value} className={triggerClassName}>
+          <TabsTrigger
+            key={tab.value}
+            value={tab.value}
+            className={triggerClassName}
+          >
             {tab.label}
             {tab.badge !== undefined && (
               <Badge className={countBadgeClassName}>{tab.badge}</Badge>

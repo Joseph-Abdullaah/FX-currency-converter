@@ -1,6 +1,6 @@
 export default function Logo() {
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex items-center gap-2">
       <svg
         width="26"
         height="26"

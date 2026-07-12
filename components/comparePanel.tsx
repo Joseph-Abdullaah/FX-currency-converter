@@ -3,6 +3,7 @@
 import Image from "next/image"
 
 import FavoriteButton from "@/components/favoriteButton"
+import CompareListSkeleton from "@/components/compareListSkeleton"
 import { useConverterStore } from "@/store/convert-store"
 import { useCurrencies } from "@/hooks/use-currencies"
 import { useLatestRates } from "@/hooks/use-latest-rates"
@@ -41,7 +42,11 @@ export default function ComparePanel() {
   // Compare the base against every curated currency except the base itself.
   const symbols = COMPARE_CODES.filter((code) => code !== base)
 
-  const { data: rateData, isError } = useLatestRates({ base, symbols })
+  const {
+    data: rateData,
+    isError,
+    isLoading,
+  } = useLatestRates({ base, symbols })
   const { data: currencies } = useCurrencies()
 
   const nameByCode = new Map(
@@ -76,6 +81,8 @@ export default function ComparePanel() {
         <p className="text-preset-4 text-muted-foreground">
           Couldn&apos;t load comparison rates. Please try again.
         </p>
+      ) : isLoading ? (
+        <CompareListSkeleton rows={symbols.length} />
       ) : (
         <div className="flex flex-col gap-3">
           {rows.map((row) => (

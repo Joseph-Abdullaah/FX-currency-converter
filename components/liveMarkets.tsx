@@ -3,6 +3,7 @@
 import { InfiniteSlider } from "@/components/motion-primitives/infinite-slider"
 import { ProgressiveBlur } from "@/components/motion-primitives/progressive-blur"
 import LiveRates from "@/components/liveRates"
+import LiveMarketSkeleton from "@/components/liveMarketSkeleton"
 import { useLatestRates } from "@/hooks/use-latest-rates"
 import { useHistoricalRates } from "@/hooks/use-historical-rates"
 
@@ -93,9 +94,7 @@ export default function LiveMarkets() {
                 />
               </>
             ) : (
-              <p className="px-3 py-3 text-[10px] text-muted-foreground md:px-5 md:text-xs">
-                Loading live markets…
-              </p>
+              <LiveMarketSkeleton />
             )}
           </div>
         </div>

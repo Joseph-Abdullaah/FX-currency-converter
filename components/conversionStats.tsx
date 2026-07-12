@@ -60,7 +60,7 @@ export default function ConversionStats({ series }: ConversionStatsProps) {
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="flex min-w-35 md:max-w-35 md:w-full flex-1 flex-col justify-center gap-4 rounded-2xl border border-border bg-card px-5 py-3"
+          className="flex min-w-35 flex-1 flex-col justify-center gap-4 rounded-2xl border border-border bg-card px-5 py-3 md:w-full md:max-w-35"
         >
           <p className="text-preset-4 text-foreground/70">{stat.label}</p>
           <p

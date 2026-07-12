@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import FavoriteButton from "@/components/favoriteButton"
+import { Skeleton } from "@/components/ui/skeleton"
 import { useHistoricalRates } from "@/hooks/use-historical-rates"
 import { useFavoritesStore, type FavoritePair } from "@/store/favorites-store"
 
@@ -25,7 +26,7 @@ function FavoriteRow({ pair }: { pair: FavoritePair }) {
 
   // A one-week window yields the latest ECB rate plus the prior business day,
   // enough to derive both the current rate and the day-over-day change.
-  const { data } = useHistoricalRates({
+  const { data, isLoading } = useHistoricalRates({
     base,
     symbol,
     startDate: isoDate(7),
@@ -60,19 +61,28 @@ function FavoriteRow({ pair }: { pair: FavoritePair }) {
       </div>
 
       <div className="flex flex-col items-end gap-1.5 text-right">
-        <p className="text-preset-3 text-foreground">
-          {rate != null ? formatRate(rate) : "—"}
-        </p>
-        <p
-          className={cn(
-            "text-preset-6",
-            positive ? "text-green-500" : "text-destructive"
-          )}
-        >
-          {changePct != null
-            ? `${positive ? "▲" : "▼"} ${positive ? "+" : ""}${changePct.toFixed(2)}%`
-            : "—"}
-        </p>
+        {isLoading && rate == null ? (
+          <>
+            <Skeleton className="h-4 w-16" />
+            <Skeleton className="h-2.5 w-12" />
+          </>
+        ) : (
+          <>
+            <p className="text-preset-3 text-foreground">
+              {rate != null ? formatRate(rate) : "—"}
+            </p>
+            <p
+              className={cn(
+                "text-preset-6",
+                positive ? "text-green-500" : "text-destructive"
+              )}
+            >
+              {changePct != null
+                ? `${positive ? "▲" : "▼"} ${positive ? "+" : ""}${changePct.toFixed(2)}%`
+                : "—"}
+            </p>
+          </>
+        )}
       </div>
 
       <FavoriteButton base={base} symbol={symbol} iconOnly />

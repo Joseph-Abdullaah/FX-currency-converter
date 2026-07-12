@@ -1,6 +1,7 @@
 "use client"
 
 import CurrencySelect from "@/components/currencySelect"
+import ConverterSkeleton from "@/components/converterSkeleton"
 import { useConverterStore } from "@/store/convert-store"
 
 const formatter = new Intl.NumberFormat("en-US", {
@@ -22,21 +23,22 @@ export default function ReceiveCard({
   const symbol = useConverterStore((state) => state.symbol)
   const setSymbol = useConverterStore((state) => state.setSymbol)
 
+  // Only the converted amount is loaded from the API, so that's the one piece
+  // we replace with a skeleton — the rest of the card stays in place.
+  const showSkeleton = converted == null && isLoading
   const display =
-    converted != null
-      ? formatter.format(converted)
-      : isLoading
-        ? "…"
-        : isError
-          ? "—"
-          : "0.00"
+    converted != null ? formatter.format(converted) : isError ? "—" : "0.00"
 
   return (
     <div className="flex flex-1 flex-col justify-end gap-5 rounded-2xl border border-border bg-secondary p-5">
       <span className="text-preset-4 text-muted-foreground">RECEIVE</span>
       <div className="flex items-center justify-between gap-4">
         <div className="flex min-w-0 flex-col items-start">
-          <p className="truncate text-preset-1 text-primary">{display}</p>
+          {showSkeleton ? (
+            <ConverterSkeleton />
+          ) : (
+            <p className="truncate text-preset-1 text-primary">{display}</p>
+          )}
           <div className="h-px w-29.5 bg-border" />
         </div>
         <CurrencySelect

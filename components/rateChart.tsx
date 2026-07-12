@@ -1,6 +1,14 @@
 "use client"
 
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import * as React from "react"
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ReferenceLine,
+  XAxis,
+  YAxis,
+} from "recharts"
 
 import {
   ChartContainer,
@@ -8,6 +16,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart"
+import RateChartSkeleton from "@/components/rateChartSkeleton"
 import type { RatePoint } from "@/components/historyPanel"
 import type { ChartRange } from "@/store/history-chart-store"
 
@@ -51,6 +60,10 @@ export default function RateChart({
   const pair = `${base}/${symbol}`
   const formatDate = makeDateFormatter(range)
 
+  // Rate under the cursor (or keyboard focus), used to draw the horizontal
+  // crosshair. Cleared when the pointer leaves so the guideline disappears.
+  const [activeRate, setActiveRate] = React.useState<number | null>(null)
+
   const chartConfig = {
     rate: { label: pair, color: "var(--primary)" },
   } satisfies ChartConfig
@@ -67,7 +80,8 @@ export default function RateChart({
   const min = values.length ? Math.min(...values) : 0
   const max = values.length ? Math.max(...values) : 1
   const spread = max - min
-  const pad = spread > 0 ? spread * 0.15 : Math.max(Math.abs(max) * 0.02, 0.0001)
+  const pad =
+    spread > 0 ? spread * 0.15 : Math.max(Math.abs(max) * 0.02, 0.0001)
   const domainMin = min - pad
   const domainMax = max + pad
   const yTicks = [domainMin, (domainMin + domainMax) / 2, domainMax]
@@ -84,18 +98,33 @@ export default function RateChart({
       </div>
 
       {series.length < 2 ? (
-        <div className="flex h-68 items-center justify-center text-preset-4 text-muted-foreground">
-          {isLoading
-            ? "Loading rates…"
-            : isError
+        isLoading ? (
+          <RateChartSkeleton />
+        ) : (
+          <div className="flex h-68 items-center justify-center text-preset-4 text-muted-foreground">
+            {isError
               ? "Couldn't load rates."
               : "Not enough rate data for this range."}
-        </div>
+          </div>
+        )
       ) : (
-        <ChartContainer config={chartConfig} className="aspect-auto h-68 w-full">
+        <ChartContainer
+          config={chartConfig}
+          className="aspect-auto h-68 w-full"
+        >
           <AreaChart
+            accessibilityLayer
             data={series}
             margin={{ left: 4, right: 8, top: 8, bottom: 4 }}
+            onMouseMove={(state) => {
+              const index = state?.isTooltipActive
+                ? state.activeIndex
+                : undefined
+              const point =
+                typeof index === "number" ? series[index] : undefined
+              setActiveRate(point ? point.rate : null)
+            }}
+            onMouseLeave={() => setActiveRate(null)}
           >
             <defs>
               <linearGradient id="fillRate" x1="0" y1="0" x2="0" y2="1">
@@ -134,7 +163,7 @@ export default function RateChart({
               tick={{ fontSize: 10 }}
             />
             <ChartTooltip
-              cursor={false}
+              cursor={{ strokeDasharray: "4 4" }}
               content={
                 <ChartTooltipContent
                   labelFormatter={(value) => formatDate(String(value))}
@@ -154,6 +183,14 @@ export default function RateChart({
               fill="url(#fillRate)"
               dot={false}
             />
+            {activeRate != null && (
+              <ReferenceLine
+                y={activeRate}
+                stroke="var(--border)"
+                strokeDasharray="4 4"
+                strokeWidth={1}
+              />
+            )}
           </AreaChart>
         </ChartContainer>
       )}
