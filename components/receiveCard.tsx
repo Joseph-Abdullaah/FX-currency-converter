@@ -36,10 +36,14 @@ export default function ReceiveCard({
       <span className="text-preset-4 text-muted-foreground">RECEIVE</span>
       <div className="flex items-center justify-between gap-4">
         <div className="flex min-w-0 flex-col items-start">
-          <p className="text-preset-1 truncate text-primary">{display}</p>
+          <p className="truncate text-preset-1 text-primary">{display}</p>
           <div className="h-px w-29.5 bg-border" />
         </div>
-        <CurrencySelect value={symbol} onValueChange={setSymbol} />
+        <CurrencySelect
+          value={symbol}
+          onValueChange={setSymbol}
+          triggerId="receive-currency-trigger"
+        />
       </div>
     </div>
   )

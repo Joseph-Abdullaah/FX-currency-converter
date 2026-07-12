@@ -25,14 +25,18 @@ export default function SendCard() {
   const value = focused ? draft : formatter.format(amount)
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const raw = event.target.value
-    setDraft(raw)
+    // Accept digits and a single decimal point only — drop anything else
+    // (letters, symbols, extra dots) so the field is numbers-only.
+    const cleaned = event.target.value
+      .replace(/[^\d.]/g, "")
+      .replace(/(\..*)\./g, "$1")
+    setDraft(cleaned)
 
-    const parsed = Number(raw.replace(/,/g, ""))
-    if (raw.trim() === "") {
+    if (cleaned === "") {
       setAmount(0)
-    } else if (Number.isFinite(parsed)) {
-      setAmount(parsed)
+    } else {
+      const parsed = Number(cleaned)
+      if (Number.isFinite(parsed)) setAmount(parsed)
     }
   }
 
@@ -61,7 +65,11 @@ export default function SendCard() {
           />
           <div className="h-px w-29.5 bg-border" />
         </div>
-        <CurrencySelect value={base} onValueChange={setBase} />
+        <CurrencySelect
+          value={base}
+          onValueChange={setBase}
+          triggerId="send-currency-trigger"
+        />
       </div>
     </div>
   )
