@@ -4,6 +4,7 @@ import { ArrowRight, Trash2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import ExportLog from "@/components/exportLog"
 import { useConversionLogStore } from "@/store/conversion-log-store"
 
 const amountFormatter = new Intl.NumberFormat("en-US", {
@@ -39,20 +40,23 @@ export default function LogPanel() {
     <div className="rounded-2xl border border-border bg-card px-5 pb-5">
       <div className="flex items-center justify-between py-5">
         <p className="text-preset-3-medium text-foreground">LOG</p>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <p className="hidden text-preset-5 text-foreground/70 sm:block">
             {logs.length} {logs.length === 1 ? "ENTRY" : "ENTRIES"}
           </p>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={clearLogs}
-            disabled={logs.length === 0}
-            className="h-auto gap-1.5 rounded-lg px-3 py-1.5 text-preset-5-medium text-foreground"
-          >
-            <Trash2 className="size-3.5" />
-            CLEAR
-          </Button>
+          <div className="flex items-center gap-2">
+            <ExportLog logs={logs} />
+            <Button
+              type="button"
+              variant="outline"
+              onClick={clearLogs}
+              disabled={logs.length === 0}
+              className="h-auto gap-1.5 rounded-lg px-3 py-1.5 text-preset-5-medium text-foreground"
+            >
+              <Trash2 className="size-3.5" />
+              CLEAR
+            </Button>
+          </div>
         </div>
       </div>
 
