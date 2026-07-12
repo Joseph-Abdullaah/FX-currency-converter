@@ -219,7 +219,7 @@ export default function KeyboardShortcuts() {
           Shortcuts
         </span>
         <KbdGroup>
-          <Kbd>Ctrl</Kbd>
+          <Kbd>Ctrl/Cmd</Kbd>
           <Kbd>K</Kbd>
         </KbdGroup>
       </Button>
