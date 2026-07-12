@@ -32,6 +32,8 @@ interface CurrencyPickerProps {
   value: string
   currencies: Currency[]
   onValueChange: (value: Currency | null) => void
+  /** DOM id for the trigger, so keyboard shortcuts can target it. */
+  triggerId?: string
 }
 
 /** ISO 4217 currency codes start with the ISO 3166 country code (USD → us). */
@@ -64,6 +66,7 @@ export function CurrencyPicker({
   value,
   currencies,
   onValueChange,
+  triggerId,
 }: CurrencyPickerProps) {
   const [open, setOpen] = React.useState(false)
 
@@ -101,6 +104,7 @@ export function CurrencyPicker({
       <PopoverTrigger asChild>
         <Button
           type="button"
+          id={triggerId}
           variant="secondary"
           role="combobox"
           aria-expanded={open}
@@ -130,7 +134,9 @@ export function CurrencyPicker({
             <CommandEmpty>No currency found.</CommandEmpty>
             {popular.length > 0 && (
               <CommandGroup
-                heading={<GroupHeading label="Popular" count={popular.length} />}
+                heading={
+                  <GroupHeading label="Popular" count={popular.length} />
+                }
               >
                 {popular.map(renderItem)}
               </CommandGroup>
@@ -138,7 +144,10 @@ export function CurrencyPicker({
             {others.length > 0 && (
               <CommandGroup
                 heading={
-                  <GroupHeading label="Other currencies" count={others.length} />
+                  <GroupHeading
+                    label="Other currencies"
+                    count={others.length}
+                  />
                 }
               >
                 {others.map(renderItem)}

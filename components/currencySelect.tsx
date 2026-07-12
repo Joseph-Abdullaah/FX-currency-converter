@@ -11,11 +11,14 @@ const POPULAR_CODES = new Set(["USD", "EUR", "GBP"])
 interface CurrencySelectProps {
   value: string
   onValueChange: (code: string) => void
+  /** DOM id for the trigger, so keyboard shortcuts can target it. */
+  triggerId?: string
 }
 
 export default function CurrencySelect({
   value,
   onValueChange,
+  triggerId,
 }: CurrencySelectProps) {
   const { data } = useCurrencies()
 
@@ -39,6 +42,7 @@ export default function CurrencySelect({
       value={value}
       currencies={currencies}
       onValueChange={(currency) => currency && onValueChange(currency.code)}
+      triggerId={triggerId}
     />
   )
 }
