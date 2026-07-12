@@ -19,7 +19,9 @@ export interface ShortcutGroup {
 export const SHORTCUT_GROUPS: ShortcutGroup[] = [
   {
     heading: "General",
+    items: [
       { id: "help", label: "Open keyboard shortcuts", keys: ["Ctrl/Cmd", "K"] },
+      { id: "theme", label: "Toggle light / dark theme", keys: ["Shift", "T"] },
     ],
   },
   {
