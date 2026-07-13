@@ -19,6 +19,7 @@ import {
 import RateChartSkeleton from "@/components/rateChartSkeleton"
 import type { RatePoint } from "@/components/historyPanel"
 import type { ChartRange } from "@/store/history-chart-store"
+import { formatRate } from "@/lib/format"
 
 interface RateChartProps {
   base: string
@@ -27,12 +28,6 @@ interface RateChartProps {
   series: RatePoint[]
   isLoading: boolean
   isError: boolean
-}
-
-/** Match the design's variable precision: fewer decimals for larger rates. */
-function formatRate(rate: number) {
-  const decimals = rate >= 100 ? 2 : rate >= 10 ? 3 : 4
-  return rate.toFixed(decimals)
 }
 
 /** Longer ranges label by month/year; shorter ones by month/day. */

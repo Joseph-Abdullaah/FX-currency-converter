@@ -3,23 +3,12 @@
 import { ArrowRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { formatRate } from "@/lib/format"
+import { isoDate } from "@/lib/date"
 import FavoriteButton from "@/components/favoriteButton"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useHistoricalRates } from "@/hooks/use-historical-rates"
 import { useFavoritesStore, type FavoritePair } from "@/store/favorites-store"
-
-/** YYYY-MM-DD for `offset` days before today (0 = today). */
-function isoDate(offsetDays: number) {
-  const date = new Date()
-  date.setDate(date.getDate() - offsetDays)
-  return date.toISOString().slice(0, 10)
-}
-
-/** Match the design's variable precision: fewer decimals for larger rates. */
-function formatRate(rate: number) {
-  const decimals = rate >= 100 ? 2 : rate >= 10 ? 3 : 4
-  return rate.toFixed(decimals)
-}
 
 function FavoriteRow({ pair }: { pair: FavoritePair }) {
   const { base, symbol } = pair

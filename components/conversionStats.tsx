@@ -1,13 +1,9 @@
 import { cn } from "@/lib/utils"
 import type { RatePoint } from "@/components/historyPanel"
+import { decimalsFor } from "@/lib/format"
 
 interface ConversionStatsProps {
   series: RatePoint[]
-}
-
-/** Match the design's variable precision: fewer decimals for larger rates. */
-function decimalsFor(rate: number) {
-  return rate >= 100 ? 2 : rate >= 10 ? 3 : 4
 }
 
 interface Stat {
