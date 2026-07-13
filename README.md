@@ -1,186 +1,191 @@
-# Frontend Mentor - FX Checker solution
+<p align="center">
+  <img alt="header" src="https://shieldcn.dev/header/gradient.svg?title=FX_CHECKER&amp;logo=data%3Aimage%2Fsvg%2Bxml%2C%3Csvg+xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27+fill%3D%27none%27+viewBox%3D%270+0+26+26%27%3E%3Cpath+fill%3D%27%2523cef739%27+fill-rule%3D%27evenodd%27+d%3D%27M2+2.1A7+7+0+0+1+7.1+0h11.6A7+7+0+0+1+24+2.1q1.8+2.2+1.9+5.5v10.8q0+3.3-2+5.5a7+7+0+0+1-5.2+2.1H7.2A7+7+0+0+1+2+23.9a8+8+0+0+1-2-5.5V7.6Q0+4.3+2+2m15.3+7a1+1+0+1+0-1.6-1.3l-7+9.2a1+1+0+0+0+1.6+1.2z%27+clip-rule%3D%27evenodd%27%2F%3E%3C%2Fsvg%3E&amp;size=wide&amp;mode=dark&amp;font=jetbrains-mono" />
+</p>
 
-This is a solution to the [FX Checker challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/foreign-exchange-currency-converter). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
+<h1 align="center">FX Currency Checker</h1>
 
-![FX Checker thumbnail](./public/thumbnail.png)
+<p align="center">
+  A monospace, keyboard-driven currency converter with live markets, historical charts, comparisons, favorites and an exportable conversion log — backed by the European Central Bank via the Frankfurter API.
+</p>
 
-## Table of contents
+<p align="center">
+  <a href="https://fx-currency-converter.vercel.app/"><b>▶ Live Demo</b></a>
+  &nbsp;·&nbsp;
+  <a href="#-features">Features</a>
+  &nbsp;·&nbsp;
+  <a href="#-tech-stack">Tech Stack</a>
+  &nbsp;·&nbsp;
+  <a href="#-architecture">Architecture</a>
+</p>
 
-- [Overview](#overview)
-  - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
-  - [AI Collaboration](#ai-collaboration)
-- [Author](#author)
-- [Acknowledgments](#acknowledgments)
+<p align="center">
+  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16-black?logo=nextdotjs" />
+  <img alt="React" src="https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white" />
+  <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind-v4-38BDF8?logo=tailwindcss&logoColor=white" />
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-cef739" />
+</p>
 
-## Overview
+---
 
-### The challenge
+## 🎬 Demo
 
-FX Checker is a currency-conversion UI backed by live European Central Bank
-reference rates (via the [Frankfurter](https://frankfurter.dev) API). Users should be able to:
+**Live site:** [fx-currency-converter.vercel.app](https://fx-currency-converter.vercel.app/)
 
-#### Converter
+## 📸 Preview
 
-- Enter an amount to send and see it convert in real time as they type
-- Pick the "send" and "receive" currencies from a searchable currency picker
-- See the live exchange rate for the active pair (for example, `1 USD = 0.8530 EUR`)
-- Swap the send and receive currencies with the swap button
-- Favorite the active pair, and log a conversion to their history
+<p align="center">
+  <img alt="FX Currency Checker preview" src="./screenshot/screenshot.png" width="100%" />
+</p>
 
-#### Currency picker
+## 📖 About
 
-- Search the full list of available currencies by code or name
-- See currencies grouped into "Popular" and "Other currencies", each row showing the flag, code, and name
-- See a check against the currency that's currently selected
+**FX Currency Checker** is a [Frontend Mentor](https://www.frontendmentor.io/) challenge built as a portfolio-quality single-page app. It converts between currencies using real, ECB-published exchange rates and layers on the tooling you'd actually want in a rates dashboard: a scrolling live-markets ticker, an interactive historical chart, side-by-side multi-currency comparison, pinnable favorite pairs, and a persistent conversion log you can export to CSV or JSON.
 
-#### Live markets ticker
+All exchange-rate data comes from the free, key-less [**Frankfurter API**](https://frankfurter.dev/), which tracks reference rates from the **European Central Bank**. UI state (amount, selected pair, favorites, log, chart range) is persisted to `localStorage`, so a session survives a page refresh.
 
-- See a ticker of currency pairs, each with its current rate and day-over-day change (up or down)
+The design is deliberately **monospace-only** — a single JetBrains Mono family drives the entire type system — with a lime-green accent and full light / dark / system theming.
 
-#### Rate history
+## ✨ Features
 
-- View a line and area chart of the active pair's rate over time
-- Switch the chart range between 1D, 1W, 1M, 3M, 1Y, and 5Y
-- See the open, last, absolute change, and percentage change for the selected range
+| Area | What it does |
+|---|---|
+| **Live converter** | Convert an amount between currencies, with the effective `1 base = x symbol` rate shown beneath. The amount input is sanitized to digits plus a single decimal point. |
+| **Currency picker** | Searchable combobox with country flags, grouped into *Popular* and *Other currencies*, fully keyboard-navigable. |
+| **Swap** | One click (or `Shift + S`) flips the send/receive pair. |
+| **Live Markets ticker** | An infinite, blur-masked marquee of USD pairs showing each live rate and its day-over-day change (▲/▼ %), derived from a single latest-rates poll plus one historical window. |
+| **History chart** | Interactive Recharts area chart with a crosshair and tooltip across **1D / 1W / 1M / 3M / 1Y / 5Y** timeframes, plus summary conversion stats (open, last, change, % change). |
+| **Compare** | Multi-currency panel converting the amount against a curated set of major currencies at once, each with its reference rate. |
+| **Favorites** | Pin any pair; each pinned row shows its current rate and daily change. Persisted across sessions. |
+| **Conversion log** | Save conversions to a running log, delete individual entries or clear all, and **export to CSV or JSON** — entirely client-side, no server. |
+| **Keyboard shortcuts** | `Ctrl/Cmd + K` opens a shortcuts dialog; single-key shortcuts drive theme, swap, focus, picker navigation and chart ranges — while never hijacking keys mid-typing. |
+| **Theming** | Light / dark / system themes via `next-themes`, with all colors driven by OKLCH design tokens. |
+| **Polish** | Skeleton loaders for every async surface, responsive layout (the tab strip collapses into a dropdown on mobile), and semantic-token styling throughout. |
 
-#### Compare
+## 🧰 Tech Stack
 
-- See their send amount converted into a range of other currencies at once, each with its reference rate
-- Pin or unpin any comparison row to their favorites
+| Category | Technology |
+|---|---|
+| **Framework** | [Next.js 16](https://nextjs.org/) (App Router, React Server Components) |
+| **UI library** | [React 19](https://react.dev/) |
+| **Language** | [TypeScript 5](https://www.typescriptlang.org/) |
+| **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) (CSS-first config, no `tailwind.config.js`) |
+| **Components** | [shadcn/ui](https://ui.shadcn.com/) (`radix-nova` style) on [Radix UI](https://www.radix-ui.com/) + [Base UI](https://base-ui.com/) |
+| **Data fetching** | [TanStack Query v5](https://tanstack.com/query) |
+| **State** | [Zustand v5](https://zustand-demo.pmnd.rs/) with `persist` middleware (localStorage) |
+| **Charts** | [Recharts](https://recharts.org/) |
+| **Animation** | [Motion](https://motion.dev/) + motion-primitives (infinite slider, progressive blur) |
+| **Icons** | [lucide-react](https://lucide.dev/) |
+| **Theming** | [next-themes](https://github.com/pacocoursey/next-themes) |
+| **Font** | [JetBrains Mono](https://www.jetbrains.com/lp/mono/) (monospace-only design) |
+| **Data source** | [Frankfurter API](https://frankfurter.dev/) — ECB reference rates |
+| **Tooling** | ESLint · Prettier (`prettier-plugin-tailwindcss`) · pnpm |
 
-#### Favorites
+## 🏗 Architecture
 
-- See their pinned pairs, each with its live rate and day-over-day change
-- Load a pinned pair back into the converter by selecting its row
-- Unpin a pair they no longer want to track
+The app is organized in clean layers: **UI components** read and write global UI state through **Zustand stores** and request server data via **TanStack Query hooks**. Those hooks call typed **service functions**, which build request URLs from centralized **endpoints** and go over a thin **`fetcher`** wrapper to the Frankfurter API. Query keys are centralized so cache reads and writes never drift.
 
-#### Conversion log
+```mermaid
+flowchart TD
+    subgraph Client["Browser · Next.js App Router"]
+        UI["UI Components<br/>Converter · Ticker · Chart · Tabs"]
 
-- See a log of conversions they've made, each showing the relative time, the pair, and the send and receive amounts
-- Clear the whole log
-- Delete an individual entry
+        subgraph State["Zustand Stores (persisted to localStorage)"]
+            S1["convert-store"]
+            S2["favorites-store"]
+            S3["conversion-log-store"]
+            S4["history-chart-store"]
+        end
 
-#### UI & accessibility
+        subgraph Query["TanStack Query Hooks"]
+            H1["use-currencies"]
+            H2["use-latest-rates"]
+            H3["use-convert-currency"]
+            H4["use-historical-rates"]
+        end
 
-- View the optimal layout for the interface depending on their device's screen size
-- See hover, focus, and cursor states for all interactive elements on the page
-- Toggle between light and dark themes
-- Navigate the entire app using only their keyboard
+        SVC["services/api.ts<br/>typed fetch functions"]
+        FET["lib/fetcher.ts<br/>fetch wrapper"]
+    end
 
-### Screenshot
+    API["Frankfurter API<br/>ECB reference rates"]
 
-<!-- Add your screenshot here, e.g. ![FX Checker screenshot](./screenshot.png) -->
-
-_Screenshot coming soon._
-
-### Links
-
-- Solution URL: [github.com/Joseph-Abdullaah/FX-currency-converter](https://github.com/Joseph-Abdullaah/FX-currency-converter)
-- Live Site URL: _Add your deployed URL here (e.g. Vercel)_
-
-## My process
-
-### Built with
-
-- [Next.js 16](https://nextjs.org/) (App Router, React Server Components) — React framework
-- [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS v4](https://tailwindcss.com/) — CSS-first config (theme in `app/globals.css`), no `tailwind.config.js`
-- [shadcn/ui](https://ui.shadcn.com/) (`radix-nova` style) on [Radix UI](https://www.radix-ui.com/) primitives
-- [TanStack Query v5](https://tanstack.com/query) — data fetching, caching, and background refetching
-- [Zustand v5](https://zustand-demo.pmnd.rs/) — client state, persisted to `localStorage`
-- [Recharts v3](https://recharts.org/) — rate-history chart
-- [Motion](https://motion.dev/) — live-markets ticker animation
-- [next-themes](https://github.com/pacocoursey/next-themes) — light/dark theming
-- [lucide-react](https://lucide.dev/) — icons
-- [Frankfurter API](https://frankfurter.dev) — ECB reference exchange-rate data
-- JetBrains Mono — monospace-only type system
-- Mobile-first, responsive layout with semantic HTML, Flexbox, and CSS Grid
-
-### What I learned
-
-**Deriving day-over-day change for the whole ticker in a single request.** The
-live-markets ticker needs a current rate _and_ a percentage change for every
-pair. A single "latest" snapshot can't produce a change, and fetching history
-per pair would fire ~30 requests. Instead, the current rates come from one
-`latest` call and the previous close comes from **one all-symbols historical
-window**, so the change is computed for every pair without a request per pair:
-
-```tsx
-// Prior close = the most recent published day strictly before the latest one.
-const previousRates =
-  latest?.date && history?.rates
-    ? history.rates[
-        Object.keys(history.rates)
-          .sort()
-          .reverse()
-          .find((date) => date < latest.date) ?? ""
-      ]
-    : undefined
+    UI <-->|read / write| State
+    UI -->|subscribe| Query
+    Query --> SVC
+    SVC -->|endpoints + query keys| FET
+    FET -->|HTTPS| API
+    API -->|JSON| FET
 ```
 
-**Server vs. client boundaries.** Pages stay as Server Components while only the
-pieces that need hooks or browser state opt into `"use client"`. The header, for
-example, is a client component purely so it can read the live currency count
-from a TanStack Query hook, while the page around it renders on the server.
+**Key decisions**
 
-**Theme-invariant active states.** The design tokens for the lime brand accent
-(`--primary`) and its foreground (`--primary-foreground`) are identical in light
-and dark mode. Leaning on those tokens — instead of translucent hover states
-that blend with the surface behind them — keeps the "favorited" button rendering
-exactly the same in both themes:
+- **RSC-first:** Server Components by default; `"use client"` is added only where state, handlers, or browser APIs are needed.
+- **Single fetch surface:** every request flows through `lib/fetcher.ts`, so error handling and the base URL live in one place.
+- **Cache correctness:** the converter and the "Log conversion" action share a query key, so logging reuses the cached rate instead of re-fetching.
+- **Derived, not duplicated:** day-over-day change in the ticker and favorites is computed from historical windows rather than one request per pair.
 
-```tsx
-favorited &&
-  "border-primary bg-primary text-primary-foreground hover:bg-[color-mix(in_oklch,var(--primary),var(--primary-foreground)_12%)]"
+## 📁 Folder Structure
+
+```text
+FX-currency-converter/
+├── app/            # App Router entry — layout, page, globals.css, typography.css
+├── components/     # Feature components + shadcn/ui primitives (ui/)
+├── hooks/          # TanStack Query hooks (currencies, rates, convert, history)
+├── lib/            # Utilities — fetcher, query client/keys, format, date helpers
+├── services/       # API fetch functions (api.ts) and endpoints (endpoints.ts)
+├── store/          # Zustand stores (converter, favorites, log, chart range)
+├── providers/      # QueryProvider, ThemeProvider
+├── types/          # Shared TypeScript types
+└── public/         # Static assets — currency flags + JetBrains Mono font
 ```
 
-**Persisted client state with Zustand.** Converter inputs, favorites, the
-conversion log, and the chart range each live in a small persisted store, so a
-user's session survives a page reload.
+## 🚀 Installation
 
-### Continued development
+**Prerequisites:** [Node.js](https://nodejs.org/) 18+ and [pnpm](https://pnpm.io/). No API key is required — the Frankfurter API is free and key-less.
 
-- Deploy a live version and wire up the solution + live-site links
-- Add unit tests around the rate/change math and store logic
-- Cache the ECB data server-side and hydrate it to avoid the initial client fetch
-- Expand keyboard-navigation and screen-reader testing across every panel
+```bash
+# 1. Clone the repository
+git clone https://github.com/Joseph-Abdullaah/FX-currency-converter.git
+cd FX-currency-converter
 
-### Useful resources
+# 2. Install dependencies
+pnpm install
 
-- [Frankfurter API docs](https://frankfurter.dev) - Free, ECB-backed exchange-rate API used for every rate in the app.
-- [TanStack Query docs](https://tanstack.com/query/latest/docs/framework/react/overview) - For query keys, background refetching, and caching patterns.
-- [Zustand docs](https://zustand.docs.pmnd.rs/) - For the small, persisted stores.
-- [shadcn/ui](https://ui.shadcn.com/docs) - Composition, theming, and the component primitives.
-- [Next.js Server & Client Components](https://nextjs.org/docs/app/building-your-application/rendering) - For deciding where the `"use client"` boundary belongs.
+# 3. Start the dev server
+pnpm dev
+```
 
-### AI Collaboration
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-I used [Claude Code](https://claude.com/claude-code) as a pair-programming
-assistant during this build.
+**Available scripts**
 
-- **Tool:** Claude Code (Anthropic).
-- **How I used it:** wiring UI components to the API and Zustand stores,
-  refactoring the live-markets ticker and compare panel to be fully data-driven,
-  normalizing hover/focus/cursor states across every interactive element, and
-  documenting the project.
-- **What worked well:** quickly reasoning about data-fetching trade-offs (e.g.
-  avoiding one request per pair) and keeping styling consistent with the existing
-  design tokens. I reviewed and directed the changes, kept design decisions my
-  own, and verified behavior against the live API and a running dev server.
+```bash
+pnpm dev          # Start the development server
+pnpm build        # Create a production build
+pnpm start        # Serve the production build
+pnpm lint         # Run ESLint
+pnpm format       # Format with Prettier
+pnpm typecheck    # Type-check with tsc --noEmit
+```
 
-## Author
+## 🔮 Future Improvements
 
-- Frontend Mentor - [@Joseph-Abdullaah](https://www.frontendmentor.io/profile/Joseph-Abdullaah)
-- GitHub - [@Joseph-Abdullaah](https://github.com/Joseph-Abdullaah)
+- Add automated tests (unit + component) around the rate/date math and the keyboard-shortcut handler.
+- Surface API/network errors with retry affordances instead of inline fallback text.
+- Persist and share converter state via URL params (deep-linkable pairs).
+- Cache the ECB data server-side and hydrate it to skip the initial client fetch.
+- Broaden currency coverage or add a secondary rates provider as a fallback.
+- Accessibility pass (screen-reader announcements for live rate updates, reduced-motion ticker).
 
-## Acknowledgments
+## 🙏 Credits
 
-- [Frontend Mentor](https://www.frontendmentor.io/) for the challenge design and brief.
-- [Frankfurter](https://frankfurter.dev) and the European Central Bank for the free exchange-rate data.
+- **Challenge:** [Frontend Mentor](https://www.frontendmentor.io/) — FX Checker.
+- **Exchange-rate data:** [Frankfurter API](https://frankfurter.dev/), sourcing [European Central Bank](https://www.ecb.europa.eu/) reference rates.
+- **UI components:** [shadcn/ui](https://ui.shadcn.com/), [Radix UI](https://www.radix-ui.com/), [Base UI](https://base-ui.com/).
+- **Icons:** [lucide-react](https://lucide.dev/) · **Font:** [JetBrains Mono](https://www.jetbrains.com/lp/mono/).
+- **Built by** [Joseph Abdullaahi](https://github.com/Joseph-Abdullaah).
+
+## 📄 License
+
+Licensed under the **MIT License** — free to use, modify, and distribute.
